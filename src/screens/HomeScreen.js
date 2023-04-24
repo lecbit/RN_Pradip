@@ -1,8 +1,22 @@
 import React from "react";
-import { SafeAreaView, ScrollView, View, Text, ImageBackground, TextInput, TouchableOpacity } from "react-native";
+import { SafeAreaView, ScrollView, View, Text, Image, ImageBackground, TextInput, TouchableOpacity } from "react-native";
 import FeatherIcon from "react-native-vector-icons/Feather";
+import Carousel from 'react-native-snap-carousel';
+import { sliderData } from "../model/data";
+import BannerSlider from "../components/BannerSlider";
+import { windowWidth } from "../utils/Dimensions";
 
 export default function HomeScreen() {
+    const renderBanner = ({ item, index }) => {
+        return ( //<BannerSlider data={item}/>
+            <View>
+                <Image
+                    source={item.image}
+                    style={{ height: 150, width: 300, borderRadius: 10 }}
+                />
+            </View>
+        )
+    }
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
             <ScrollView style={{ padding: 20 }}>
@@ -36,6 +50,15 @@ export default function HomeScreen() {
                         <Text style={{ color: '#0aada8' }}>See all</Text>
                     </TouchableOpacity>
                 </View>
+
+                <Carousel
+                    ref={(c) => { this._carousel = c; }}
+                    data={sliderData}
+                    renderItem={renderBanner}
+                    sliderWidth={windowWidth - 40}
+                    itemWidth={300}
+                    loop={true}
+                />
             </ScrollView>
         </SafeAreaView>
     )
